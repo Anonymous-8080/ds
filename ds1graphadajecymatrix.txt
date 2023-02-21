@@ -1,0 +1,236 @@
+adj
+#include<iostream>
+using namespace std;
+
+#define MAX 100
+#define initial 1
+#define waiting 2
+#define visited 3
+
+int n;
+int adj[MAX][MAX];
+int state[MAX];
+void create_graph();
+void BF_Traversal();
+void BFS(int v);
+
+int queue[MAX], front=-1, rear=-1;
+void insert_queue(int vertex);
+int delete_queue();
+int isEmpty_queue();
+
+int main()
+{
+	create_graph();
+	BF_Traversal();
+	return 0;
+}
+
+void BF_Traversal()
+{
+	int v;
+	for(v=1; v<=n; v++)
+		state[v]=initial;
+	cout<<"Enter start vertex for BFS: \n";
+	cin>>v;
+	BFS(v);
+}
+
+void BFS(int v)
+{
+	int i;
+	insert_queue(v);
+	state[v]=waiting;
+	while(!isEmpty_queue());
+	{
+		v = delete_queue();
+		cout<<v;
+		state[v] = visited;
+		for(i=1; i<=n; i++)
+		{
+			if(adj[v][i]==1 && state[i]==initial)
+			{
+				insert_queue(i);
+				state[i]=waiting;
+			}
+		}
+	}
+	cout<<"\n";
+}
+
+void insert_queue(int vertex)
+{
+	if(rear==MAX-1)
+	{
+		cout<<"Queue Overflow\n";
+	}
+	else
+	{
+		if(front==-1)
+			front = 0;
+		rear=rear+1;
+		queue[rear]=vertex;
+	}
+}
+
+int isEmpty_queue()
+{
+	if(front==-1 || front>rear)
+		return 1;
+	else
+		return 0;
+}
+
+int delete_queue()
+{
+	int delete_item;
+	if(front==-1 || front>rear)
+	{
+		cout<<"Queue Underflow\n";
+		exit(1);
+	}
+	delete_item = queue[front];
+	front = front+1;
+	return delete_item;
+}
+
+void create_graph()
+{
+	int count, max_edge, origin, destination;
+	cout<<"Enter number of vertices: ";
+	cin>>n;
+	max_edge = n*(n-1);
+	for(count=1; count<=max_edge; count++)
+	{
+		cout<<"Enter edge "<<count<<"(-1 -1 to quit): ";
+		cin>>origin>>destination;
+		if(origin==-1 && destination==-1)
+			break;
+		if(origin>n || destination>n ||origin<0 ||destination<0)
+		{
+			cout<<"Invalid edge!\n";
+			count--;
+		}
+		else
+		{
+			adj[origin][destination] = 1;
+		}
+	}
+}
+adjecymatrix1:-
+#include<iostream>
+using namespace std;
+
+class graph
+{
+	int array[10][10];
+	int direction;
+	int vertices;
+	public:
+		graph();
+		void create_matrix();
+		void display();	
+};
+
+graph::graph()
+{
+	cout<<"\nHow many vertices do you want in a graph?: ";
+	cin>>vertices;
+	cout<<"\nEnter direction of graph (0-Undirected, 1-Directed): ";
+	cin>>direction;
+	int i, j;
+	for(i=0; i<10; i++)
+	{
+		for(j=0; j<10; j++)
+		{
+			array[i][j]=0;            //Disjoint graph
+		}
+	}
+}
+
+void graph::create_matrix()
+{
+	int edge_count, from, to;
+	if(direction==1)
+		edge_count = (vertices*(vertices-1));
+	else
+		edge_count = (vertices*(vertices-1))/2;
+	for(int i=1; i<=edge_count; i++)
+	{
+		cout<<"\nEnter two vertices to be connected (Enter 0 0 to Quit): "<<endl;
+		cout<<"\nFrom vertex= ";            // Source vertex 
+		cin>>from;
+		cout<<"\nTo vertex= ";              // Destination vertex
+		cin>>to;
+		if(from==0 || to==0)                // Condition to quit loop
+			break;
+		if(from<0 || to<0 || from>vertices || to>vertices)
+		{
+			cout<<"\nGraph not possible!! Invalid Connections";
+			i--;
+		}
+		else
+		{
+			array[from][to] = 1;
+			if(direction==0)
+				array[to][from] == 1;
+		}
+	}
+}
+
+void graph::display()
+{
+	int i, j;
+	for(i=1; i<=vertices; i++)
+	{
+		cout<<"\t";
+		for(j=1; j<=vertices; j++)
+		{
+			cout<<" "<<array[i][j];
+		}
+		cout<<endl;
+	}
+}
+
+int main()
+{
+	graph g;
+	g.create_matrix();
+	g.display();
+	return 0;
+}
+adjecymatrix2:-
+#include<iostream>
+using namespace std;
+int vertArr[20][20]; //the adjacency matrix initially 0
+int count = 0;
+void displayMatrix(int v) {
+   int i, j;
+   for(i = 0; i < v; i++) {
+      for(j = 0; j < v; j++) {
+         cout << vertArr[i][j] << " ";
+      }
+      cout << endl;
+   }
+}
+void add_edge(int u, int v) {       //function to add edge into the matrix
+   vertArr[u][v] = 1;
+   vertArr[v][u] = 1;
+}
+main(int argc, char* argv[]) 
+{
+   cout << "Adjacency Matrix Representation\n"<< endl; 
+   int v = 6;    //there are 6 vertices in the graph
+   add_edge(0, 4);
+   add_edge(0, 3);
+   add_edge(1, 2);
+   add_edge(1, 4);
+   add_edge(1, 5);
+   add_edge(2, 3);
+   add_edge(2, 5);
+   add_edge(5, 3);
+   add_edge(5, 4);
+   displayMatrix(v);
+}
+
+

@@ -1,0 +1,308 @@
+kruskal
+#include<iostream>
+#include <algorithm>
+#include<vector>
+using namespace std;
+
+class edge
+{
+
+public:
+    int s;
+    int d;
+    int w;
+
+    edge()
+    {
+
+    }
+    edge(int src,int des,int wei)
+    {
+        s=src;
+        d=des;
+        w=wei;
+    }
+};
+bool compare(edge e1,edge e2)
+{
+    return e1.w<e2.w;
+}
+
+
+int findparent(int i,int* parent )
+{
+    if(parent[i]==i)
+    {
+     return i;
+    }
+
+    return findparent(parent[i],parent);
+}
+
+
+class graph
+{
+
+public:
+
+    int e,n;
+    edge* v;
+
+    graph(int n,int e)
+    {
+
+        this->n=n;
+        this->e=e;
+        v=new edge[e];
+        for(int i=0; i<e; i++)
+        {
+            int x,y,w;
+            cout<<"ENTER VERTICES AND WEIGHT OF EDGE "<<i+1<<" :	";
+            cin>>x>>y>>w;
+            edge e(x,y,w);
+            v[i]=e;
+        }
+    }
+
+    edge* unionfind()
+    {
+        int* parent=new int[n];
+        for(int i=0; i<n; i++)
+        {
+            parent[i]=i;
+
+        }
+
+        sort(v,v+e,compare);
+
+        edge* output;
+        output=new edge[n-1];
+        int count=0,i=0;
+        while(count!=n-1)
+        {
+            edge c=v[i];
+
+            int sourceparent=findparent(v[i].s,parent);
+
+            int desparent=findparent(v[i].d,parent);
+
+            if(sourceparent!=desparent)
+            {
+
+                output[count]=c;
+
+                parent[sourceparent]=desparent;
+
+                count++;
+
+            }
+	
+            i++;
+
+        }
+
+        int sum=0;
+
+        cout<<endl<<"-------MST-------\n";
+
+        for(int i=0; i<n-1; i++)
+        {
+            cout<<output[i].s<<"	"<<output[i].d<<"	"<<output[i].w<<endl;
+            sum+=output[i].w;
+        }
+        cout<<"\nWEIGHT OF MST IS "<<sum;
+        return output;
+    }
+};
+	int main()
+{
+    int n,e;
+    cout<<"\n KRUSKAL'S ALGORITHM Implementation\n"<<endl;
+	cout<<" Please Enter Number of Vertices: ";
+    cin>>n;
+    cout<<"Pleas Enter Number of Edges: ";
+    cin>>e;
+    graph g(n,e);
+    edge* mst=g.unionfind();
+}
+prim1:-
+#include<iostream>
+using namespace std;
+
+#define ROW 7
+#define COL 7
+#define infinity 9999
+
+class prims
+{
+	int graph[ROW][COL], nodes;
+	public:
+		prims();
+		void createGraph();
+		void primsAlgo();	
+};            
+
+prims::prims()
+{
+	for(int i=0; i<ROW; i++)
+	{
+		for(int j=0; j<COL; j++)
+		{
+			graph[i][j]=0;
+		}
+	}
+}
+
+void prims::createGraph()
+{
+	int i, j;
+	cout<<"Enter total nodes: ";
+	cin>>nodes;
+	cout<<"\n\nEnter adjacency matrix: ";
+	for(i=0; i<nodes; i++)
+	{
+		for(j=0; j<nodes; j++)
+		{
+			cin>>graph[i][j];
+		}
+	}
+	for(i=0; i<nodes; i++)          // Assign infinity to all graph[i][j] where weight is 0
+	{
+		for(j=0; j<nodes; j++)
+		{
+			if(graph[i][j]==0)
+			{
+				graph[i][j] = infinity;
+			}
+		}
+	}
+	cout<<"Matrix is: "<<endl;      // Printing graph in matrix form
+	for(i=0; i<nodes; i++)           
+	{
+		for(j=0; j<nodes; j++)
+		{
+			cout<<" "<<graph[i][j];
+			if((j+1)%nodes==0)
+				cout<<endl;
+		}
+	}
+}
+
+void prims::primsAlgo()
+{
+	cout<<"Minimum spanning tree is: ";
+	int selected[ROW], i, j, ne, min, x, y;
+	for(i=0; i<nodes; i++)
+		selected[i]=false;
+	selected[0]=true;
+	ne=0;
+	while(ne<nodes-1)
+	{
+		min=infinity;
+		for(i=0; i<nodes; i++)
+		{
+			if(selected[i]==true)
+			{
+				for(j=0; j<nodes; j++)
+				{
+					if(selected[j]==false)
+					{
+						if(min>graph[i][j])
+						{
+							min = graph[i][j];
+							x=i;
+							y=j;
+						}
+					}
+				}
+			}
+		}
+		selected[y]=true;
+		cout<<"\n"<<x+1<<"--> "<<y+1;
+		ne=ne+1;
+	}
+}
+
+int main()
+{
+	prims MST;
+	cout<<"\nPrims Algorithm to find Minimum Spanning Tree\n";
+	MST.createGraph();
+	MST.primsAlgo();
+	return 0;
+}
+
+prim2:-
+#include <bits/stdc++.h>
+using namespace std;
+#define V 5
+int minKey(int key[], bool mstSet[])
+{
+ int min = INT_MAX, min_index;
+ for (int v = 0; v < V; v++)
+ {
+ if (mstSet[v] == false && key[v] < min)
+ {
+ min = key[v], min_index = v;
+ }
+ }
+ return min_index;
+}
+void printMST(int parent[], int graph[V][V])
+{
+ int a = 0;
+ cout<<"Edge \tWeight\n";
+ for (int i = 1; i < V; i++)
+ {
+ cout<<parent[i]<<" - "<<i<<" \t"<<graph[i][parent[i]]<<" \n";
+ a = a + graph[i][parent[i]];
+ }
+ cout<<"The weight of graph is: "<<a<<endl;
+}
+void primMST(int graph[V][V])
+{
+ int parent[V];
+ int key[V];
+ bool mstSet[V];
+ for (int i = 0; i < V; i++)
+ {
+ key[i] = INT_MAX, mstSet[i] = false;
+ }
+ key[0] = 0;
+ parent[0] = -1;
+ for (int count = 0; count < V - 1; count++)
+ {
+ int u = minKey(key, mstSet);
+ mstSet[u] = true;
+ for (int v = 0; v < V; v++)
+ {
+ if (graph[u][v] && mstSet[v] == false && graph[u][v] < key[v])
+ {
+ parent[v] = u, key[v] = graph[u][v];
+ }
+ }
+ }
+ printMST(parent, graph);
+}
+int main()
+{
+ /* Let us create the following graph
+ 2 3
+ (0)--(1)--(2)
+ | / \ |
+ 6| 8/ \5 |7
+ | / \ |
+ (3)-------(4)
+ 9 */
+ int graph[V][V] =
+ { { 0, 2, 0, 6, 0 },
+ { 2, 0, 3, 8, 5 },
+ { 0, 3, 0, 0, 7 },
+ { 6, 8, 0, 0, 9 },
+ { 0, 5, 7, 9, 0 }
+ };
+ primMST(graph);
+ return 0;
+}
+
+

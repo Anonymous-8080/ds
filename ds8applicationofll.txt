@@ -1,0 +1,396 @@
+polynomialadd:-
+#include<bits/stdc++.h>
+using namespace std;
+struct Node{
+   int coeff;
+   int pow;
+   struct Node *next;
+};
+void create_node(int x, int y, struct Node **temp){
+   struct Node *r, *z;
+   z = *temp;
+   if(z == NULL){
+      r =(struct Node*)malloc(sizeof(struct Node));
+      r->coeff = x;
+      r->pow = y;
+      *temp = r;
+      r->next = (struct Node*)malloc(sizeof(struct Node));
+      r = r->next;
+      r->next = NULL;
+   } else {
+      r->coeff = x;
+      r->pow = y;
+      r->next = (struct Node*)malloc(sizeof(struct Node));
+      r = r->next;
+      r->next = NULL;
+   }
+}
+void polyadd(struct Node *p1, struct Node *p2, struct Node *result){
+   while(p1->next && p2->next){
+      if(p1->pow > p2->pow){
+         result->pow = p1->pow;
+         result->coeff = p1->coeff;
+         p1 = p1->next;
+      }
+      else if(p1->pow < p2->pow){
+         result->pow = p2->pow;
+         result->coeff = p2->coeff;
+         p2 = p2->next;
+      } else {
+         result->pow = p1->pow;
+         result->coeff = p1->coeff+p2->coeff;
+         p1 = p1->next;
+         p2 = p2->next;
+      }
+      result->next = (struct Node *)malloc(sizeof(struct Node));
+      result = result->next;
+      result->next = NULL;
+   }
+   while(p1->next || p2->next){
+      if(p1->next){
+         result->pow = p1->pow;
+         result->coeff = p1->coeff;
+         p1 = p1->next;
+      }
+      if(p2->next){
+         result->pow = p2->pow;
+         result->coeff = p2->coeff;
+         p2 = p2->next;
+      }
+      result->next = (struct Node *)malloc(sizeof(struct Node));
+      result = result->next;
+      result->next = NULL;
+   }
+}
+void printpoly(struct Node *node){
+   while(node->next != NULL){
+      printf("%dx^%d", node->coeff, node->pow);
+      node = node->next;
+      if(node->next != NULL)
+         printf(" + ");
+   }
+}
+int main()
+{
+   cout << "Implementation of Polynomial Addition" << endl;
+   struct Node *p1 = NULL, *p2 = NULL, *result = NULL;
+   create_node(41,7,&p1);
+   create_node(12,5,&p1);
+   create_node(65,0,&p1);
+   create_node(21,5,&p2);
+   create_node(15,2,&p2);
+   printf("polynomial 1: ");
+   printpoly(p1);
+   printf("\npolynomial 2: ");
+   printpoly(p2);
+   result = (struct Node *)malloc(sizeof(struct Node));
+   polyadd(p1, p2, result);
+   printf("\npolynomial after adding p1 and p2 : ");
+   printpoly(result);
+   return 0;
+}
+sparse matrix:-
+#include <iostream>
+using namespace std;
+class Term
+{	
+public:
+    int row, column, value;
+    Term *next;
+    Term(int row, int column, int value, Term *next = NULL)
+    {
+        this->row = row;
+        this->column = column;
+        this->value = value;
+        if (next != NULL)
+        {
+            this->next = next;
+        }
+    }
+};
+class SparseMatrix
+{
+public:
+    Term *head;
+    int row, column;
+    SparseMatrix(int row, int column)
+    {
+        this->row = row;
+        this->column = column;
+        head = NULL;
+    }
+    void addTerm(int row, int column, int value)
+    {
+        if (head == NULL)
+        {
+            head = new Term(row, column, value);
+        }
+        else
+        {
+            Term *temp = head;
+            while (temp->next != NULL)
+            {
+                temp = temp->next;
+            }
+            temp->next = new Term(row, column, value);
+        }
+    }
+    void print()
+    {
+        Term *temp = head;
+        for (int i = 1; i <= column; i++)
+        {
+            for (int j = 1; j <= row; j++)
+            {
+                if (temp == NULL)
+                {
+                    cout << "0 ";
+                    continue;
+                }
+                if (temp->row == i && temp->column == j)
+                {
+                    cout << temp->value << " ";
+                    temp = temp->next;
+                }
+                else
+                {
+                    cout << "0 ";
+                }
+            }
+            cout << endl;
+        }
+    }
+};
+
+
+int main()
+{
+    cout << "Sparse Matrix" << endl;
+    cout << "Enter number of rows: ";
+    int row;
+    cin >> row;
+    cout << "Enter number of columns: ";
+    int column;
+    cin >> column;
+    SparseMatrix s = SparseMatrix(row, column);
+    cout << "Enter number of terms: ";
+    int terms;
+    cin >> terms;
+    for (int i = 0; i < terms; i++)
+    {
+        cout << "Enter row: ";
+        int row;
+        cin >> row;
+        cout << "Enter column: ";
+        int column;
+        cin >> column;
+        cout << "Enter value: ";
+        int value;
+        cin >> value;
+        s.addTerm(row, column, value);
+    }
+    s.print();
+    return 0;
+}
+
+sparsematrix2:-
+#include<iostream>
+using namespace std;
+class Node
+{
+public:
+int row;
+int col;
+int data;
+Node *next;
+};
+void create_new_node(Node **p, int row_index,int col_index, int x)
+{
+Node *temp = *p;
+Node *r;
+if (temp == NULL)
+{
+temp = new Node();
+ temp->row = row_index;
+ temp->col = col_index;
+ temp->data = x;
+ temp->next = NULL;
+ *p = temp;
+}
+else
+{
+ while (temp->next != NULL)
+ temp = temp->next;
+ r = new Node();
+ r->row = row_index;
+ r->col = col_index;
+ r->data = x;
+ r->next = NULL;
+ temp->next = r;
+}
+}
+void printList(Node *start)
+{
+Node *ptr = start;
+cout << "Row position: ";
+while (ptr != NULL)
+{
+ cout << ptr->row << " ";
+ ptr = ptr->next;
+}
+cout << endl;
+cout << "Column position:";
+ptr = start;
+while (ptr != NULL)
+{
+ cout << ptr->col << " ";
+ ptr = ptr->next;
+}
+cout << endl;
+cout << "Value: ";
+ptr = start;
+while (ptr != NULL)
+{
+ cout << ptr->data << " ";
+ ptr = ptr->next;
+}
+}
+int main()
+{
+int sparseMatrix[4][5] = { { 0 , 0 , 3 , 0 , 4 },
+ { 0 , 0 , 5 , 7 , 0 },
+ { 0 , 0 , 0 , 0 , 0 },
+ { 0 , 2 , 6 , 0 , 0 } };
+Node *first = NULL;
+for(int i = 0; i < 4; i++)
+{
+ for(int j = 0; j < 5; j++)
+ {
+ if (sparseMatrix[i][j] != 0)
+ create_new_node(&first, i, j,sparseMatrix[i][j]);
+}
+}
+cout<<"Sparse Matrix"<<endl;
+for(int i = 0; i < 4; i++)
+{
+ for(int j = 0; j < 5; j++)
+ {
+ cout<<sparseMatrix[i][j]<<" ";
+ }
+ cout<<endl;
+}
+cout<<endl;
+cout<<"Positions of non-zero values from the sparse matrix"<<endl;
+printList(first);
+cout<<endl;
+return 0;
+}
+
+sparsematrixusingll:-
+#include<iostream>
+using namespace std;
+
+class Node
+{
+	public:
+	int row;
+	int col;
+	int data;
+	Node *next;
+};
+
+void create_new_node(Node **p, int row_index,
+					int col_index, int x)
+{
+	Node *temp = *p;
+	Node *r;
+
+	if (temp == NULL)
+	{
+		temp = new Node();
+		temp->row = row_index;
+		temp->col = col_index;
+		temp->data = x;
+		temp->next = NULL;
+		*p = temp;
+	}
+
+	else
+	{
+		while (temp->next != NULL)
+			temp = temp->next;
+
+		r = new Node();
+		r->row = row_index;
+		r->col = col_index;
+		r->data = x;
+		r->next = NULL;
+		temp->next = r;
+	}
+}
+
+void printList(Node *start)
+{
+	Node *ptr = start;
+	cout << "row_position:";
+	while (ptr != NULL)
+	{
+		cout << ptr->row << " ";
+		ptr = ptr->next;
+	}
+	cout << endl;
+	cout << "column_position:";
+
+	ptr = start;
+	while (ptr != NULL)
+	{
+		cout << ptr->col << " ";
+		ptr = ptr->next;
+	}
+	cout << endl;
+	cout << "Value:";
+	ptr = start;
+
+	while (ptr != NULL)
+	{
+		cout << ptr->data << " ";
+		ptr = ptr->next;
+	}
+}
+
+int main()
+{
+	int row, col;
+
+	cout<<"Enter number of rows for sparse matrix"<<endl;
+	cin>>row;
+	cout<<"Enter number of columns for sparse matrix"<<endl;
+	cin>>col;
+
+	int sparseMatrix[row][col];
+
+    for(int i = 0; i < row; i++)
+	{
+		for(int j = 0; j < col; j++)
+		{
+		    cout<<"Enter the value for["<<i<<"]["<<j<<"]"<<endl;
+		    cin>>sparseMatrix[i][j];
+		}
+	}
+
+	Node *first = NULL;
+	for(int i = 0; i < row; i++)
+	{
+		for(int j = 0; j < col; j++)
+		{
+			if (sparseMatrix[i][j] != 0)
+            {
+				create_new_node(&first, i, j, sparseMatrix[i][j]);
+            }
+		}
+	}
+	printList(first);
+
+	return 0;
+}
+

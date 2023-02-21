@@ -1,0 +1,567 @@
+// Bubble sort
+#include <iostream> 
+#include <string>	
+using namespace std;
+//implementation of Bubble Sort 
+void bubbleSort(int arr[], int size)
+{
+ int n=size;
+  for (int i=0;i<n-1;i++)
+ {  
+     for (int j=0;j<n-i-1;j++)
+      {
+        if (arr[j] > arr[j+1])
+         {
+          // swap arr[j+1] and arr[j]
+            int temp = arr[j];
+            arr[j] = arr[j+1];
+            arr[j+1] = temp;
+         }  
+      }
+   cout<<"Pass"<<i<<" : ";
+     for(int k=0;k<n;k++)
+    {   
+     cout<<arr[k]<<" ";
+    }  
+      cout<<endl;
+   }
+      cout<<endl;
+ }
+/* Printing array */
+void printArray(int arr[], int size)
+{
+   int n = size;
+   for (int i=0; i<n; i++)
+   { 
+      cout<<arr[i]<<" ";
+   }
+}
+int main()
+{
+  int n, i;
+  cout<<"Implementation of Bubble Sort program "<<endl;
+  cout<<"Enter the number of elements to be sorted: "<<endl; 
+  cin>>n;
+  int arr[n];
+  for ( i = 0; i < n; i++)
+    {
+    cout<<"Enter "<<i+1<<" element"<<endl; 
+	   cin>>arr[i];
+    }
+ bubbleSort(arr,n);
+ cout<<"Sorted array is: ";
+  printArray(arr,n);
+  return 0;	
+}
+
+
+
+//insertion sort
+#include <iostream> 
+#include <string>
+
+using namespace std;
+void insertionSort(int arr[],int size)
+{
+  int n = size; 
+  for (int i = 1; i < n; ++i)
+   { 
+     int key = arr[i];
+     int j = i - 1;
+
+/* Move elements of arr[0..i-1],
+   that are greater than key,
+  to one position ahead of their current position */
+
+   while (j >= 0 && arr[j] > key) 
+    { 
+      arr[j + 1] = arr[j];
+      j = j - 1;
+    }
+    arr[j + 1] = key; 
+	cout<<"Pass"<<i<<" : ";
+for( int k = 0; k < n; k++)
+  {
+    cout<<arr[k]<<" ";
+  }
+  cout<<endl;
+}
+}
+
+/* Prints the array */
+void printArray(int arr[], int size)
+{
+int n = size;
+for (int i=0; i<n; i++)
+ {
+   cout<<arr[i]<<" ";
+ }
+}
+int main()
+{
+  int n, i;
+  cout<<"Implementation of Insertion Sort program"<<endl;
+  cout<<"Enter number of elements to be sorted: "<<endl; 
+  cin>>n;
+  int arr[n];
+  for ( i = 0; i < n; i++)
+    {
+      cout<<"Enter "<<i+1<<" element"<<endl; 
+	  cin>>arr[i];
+    }
+  insertionSort(arr, n);
+  cout<<"Sorted array is: "; 
+  printArray(arr, n);
+   return 0;
+}
+
+//Quicksort:-
+#include <iostream> 
+#include <string>
+using namespace std;
+void swap(int arr[], int i, int j)
+{
+  int temp = arr[i];
+    arr[i] = arr[j];
+    arr[j] = temp;
+}
+int partition(int arr[], int low, int high)
+{
+  // pivot
+  int pivot = arr[high];
+  /* Index of smaller element and indicates the right position
+ of pivot found so far */
+   int i = (low - 1); 
+for(int j = low; j <= high - 1; j++)
+  {
+/*If current element is smaller than the pivot if */
+    if(arr[j] < pivot)
+   {
+/* Increment index of smaller element */
+       i++;
+     swap(arr, i, j);
+   }
+}
+    swap(arr, i + 1, high); 
+    return (i + 1);
+}
+void quickSort(int arr[], int low, int high)
+{
+if (low < high)
+{
+/* pi is partitioning index, arr[p] is now at right place */
+   int pi = partition(arr, low, high);
+/* Separately sort elements before partition and after partition */
+    quickSort(arr, low, pi - 1); 
+    quickSort(arr, pi + 1, high);
+}
+}
+/* Prints the array */
+void printArray(int arr[], int size)
+{
+int n = size;
+for (int i=0; i<n; i++) 
+ { 
+   cout<<arr[i]<<" ";
+ }
+}
+
+int main()
+{
+  int n, i;
+  cout<<"Implementation of Quick Sort program"<<endl;
+  cout<<"Enter number of elements to be sorted: "<<endl; 
+  cin>>n;
+  int arr[n];
+for ( i = 0; i < n; i++)
+{
+  cout<<"Enter "<<i+1<<" element"<<endl; 
+  cin>>arr[i];
+}
+  quickSort(arr, 0, n-1); 
+  cout<<"Sorted array is: ";
+  printArray(arr, n);
+  return 0;
+}
+
+//Radix sort:-
+#include <iostream> 
+#include <string>
+using namespace std;
+/* A utility function to get maximum value in arr[] */ 
+int getMax(int arr[], int n)
+{
+int mx = arr[0];
+for (int i = 1; i < n; i++) if (arr[i] > mx)
+mx = arr[i]; return mx;
+}
+/* A function to do counting sort of arr[] according to
+ the digit represented by exp.*/
+void countSort(int arr[], int n, int exp)
+{
+int output[n];
+int i, 
+count[10] = { 0 };
+
+ for (i = 0; i < n; i++)
+	 {
+  count[(arr[i] / exp) % 10]++;
+ }
+   for (i = 1; i < 10; i++)
+   {
+   	count[i] += count[i - 1];
+   }
+     for (i = n - 1; i >= 0; i--)
+	  {
+        output[count[(arr[i] / exp) % 10] - 1] = arr[i];
+		 count[(arr[i] / exp) % 10]--;
+	  }
+	    for (i = 0; i < n; i++)
+        {
+		  arr[i] = output[i];
+	    }
+}
+/*The main function to that sorts arr[] of size n using Radix Sort */
+ 	void radixSort(int arr[], int n)
+{
+	 int m = getMax(arr, n);
+	 for (int exp = 1; m / exp > 0; exp *= 10) 
+	 {
+	    countSort(arr, n, exp);
+     }	 
+}
+/* Prints the array */
+void printArray(int arr[], int size)
+{
+   int n = size;
+   for (int i=0; i<n; ++i)
+   {
+    cout<<arr[i]<<" ";
+   }
+}
+int main()
+{
+int n, i;
+cout<<"Implementation of Radix Sort Program"<<endl;
+cout<<"Enter number of elements to be sorted: "<<endl;
+cin>>n;
+int arr[n];
+for ( i = 0; i < n; i++)
+{
+cout<<"Enter "<<i+1<<" element"<<endl; 
+cin>>arr[i];
+}
+radixSort(arr, n); 
+cout<<"Sorted array is: "; 	
+printArray(arr, n); 
+return 0;
+}
+
+selection sort:-
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+//Implementation of SelectionSort
+void selectionSort(int arr[],int size)
+{
+  int n = size;
+  // One by one move boundary of unsorted subarray
+  for (int i = 0; i < n-1; i++)
+
+    {
+  // Find the minimum element in unsorted array 
+      int min_idx = i;
+      for (int j=i+1; j < n; j++)
+       { 
+           if (arr[j] < arr[min_idx])
+            {
+               min_idx = j;
+            } 
+       }   
+   // Swap the found minimum element with the first element
+   
+           int temp = arr[min_idx];
+               arr[min_idx] = arr[i]; 
+               arr[i] = temp;
+	     cout<<"Pass"<<i<<" : ";
+        for ( int k = 0; k < n; k++)
+            {
+              cout<<arr[k]<<" ";
+            }
+        cout<<endl;
+}
+}
+
+/* Prints the array */
+void printArray(int arr[], int size)
+ {
+     int n = size;
+     for (int i=0; i<n; i++)
+	 {	
+       cout<<arr[i]<<" ";
+     }
+}
+int main()
+{
+  int n, i;
+  cout<<"Implementation of Selection Sort program"<<endl;
+  cout<<"Enter number of elements to be sorted: "<<endl; 
+  cin>>n;
+  int arr[n];
+
+  for ( i = 0; i < n; i++)
+   {
+      cout<<"Enter "<<i+1<<" element"<<endl; 
+	  cin>>arr[i];
+   }
+
+    selectionSort(arr, n);
+	cout<<"Sorted array is: ";
+	printArray(arr, n); 
+	return 0;
+}
+
+//shell sort:-
+#include <iostream>
+ #include <string>
+using namespace std;
+int shellSort(int arr[], int size)
+{
+  int n = size;
+    for (int gap = n/2; gap > 0; gap /= 2)
+  {
+  	for (int i = gap; i < n; i += 1)
+  	{
+	  int temp = arr[i];
+	  int j;
+	  for (j = i; j >= gap && arr[j - gap] > temp; j -= gap)
+	       arr[j] = arr[j - gap];
+  	       arr[j] = temp;
+	      	}
+	 cout<<"Pass"<<" : ";
+		for ( int k = 0; k < n; k++)
+			{
+    cout<<arr[k]<<" ";
+			}
+	cout<<endl;
+     }
+ return 0;
+  }
+/* Prints the array */
+void printArray(int arr[], int size)
+{
+int n = size;
+for (int i=0; i<n; ++i){ cout<<arr[i]<<" ";
+}
+}
+
+int main()
+{
+int n, i;
+cout<<"Implementation of Shell Sort program"<<endl;
+cout<<"Enter number of elements to be sorted: "<<endl;
+ cin>>n;
+int arr[n];
+ for ( i = 0; i < n; i++)
+  {
+   cout<<"Enter "<<i+1<<" element"<<endl; 
+   cin>>arr[i];
+  }
+shellSort(arr, n);
+cout<<"Sorted array is: ";
+printArray(arr, n);
+ return 0;
+}
+
+sorting:-
+
+#include<iostream>
+using namespace std;
+
+class sort
+{
+	int arr[5];
+	public:
+		
+		void getdata()
+		{
+			int i;
+			cout<<"Enter 5 elements";
+			for (i=0;i<5;i++)
+			cin>>arr[i];
+		}
+		
+		void selectionsort()
+		{
+			int curr, small, walk, last=4, temp;
+			for(curr=0;curr<last;curr++)
+			{
+				small=curr;
+				for(walk=curr+1;walk<=last;walk++)
+				{
+					if(arr[walk]<arr[small])
+					small=walk;
+				}
+				temp=arr[curr];
+				arr[curr]=arr[small];
+				arr[small]=temp;
+			}
+		}
+		
+		void bubblesort()
+		{
+			int curr, walk, last=4, temp;
+			for(curr=0;curr<last;curr++)
+			{
+				for(walk=last;walk>curr;walk--)
+				{
+					if(arr[walk]<arr[walk-1])
+					{
+						temp=arr[walk];
+						arr[walk]=arr[walk-1];
+						arr[walk-1]=temp;
+					}
+				}
+			}
+		}
+		
+		void insertionsort()
+		{
+			int curr, walk, hold;
+			for(curr=1;curr<=4;curr++)
+			{
+				hold=arr[curr];
+				walk=curr-1;
+				while(hold<arr[walk] && walk>=0)
+				{
+					arr[walk+1]=arr[walk];
+					walk--;
+				}
+				arr[walk+1]=hold;
+			}
+		}
+		
+		void shellsort()
+		{
+			int curr, last=4, walk, hold, incr;
+			incr=last/2;
+			while(incr!=0)
+			{
+				for(curr=1+incr;curr<=last;curr++)
+				{
+					hold=arr[curr];
+					walk=curr-incr;
+					while(walk>=0 && hold<arr[walk])
+					{
+						arr[walk+incr]=arr[walk];
+						walk=walk-incr;
+					}
+					arr[walk+incr]=hold;
+				}
+				incr=incr/2;
+			}
+		}
+		
+		void radixsort()
+		{
+			int r=1, i, j, temp;
+			while(r!=1000)
+			{
+				for(i=0;i<5;i++)
+				{
+					for(j=i+1;j<5;j++)
+					{
+						if(((arr[i]/r)%10)>((arr[j]/r)%10))
+						{
+							temp=arr[i];
+							arr[i]=arr[j];
+							arr[j]=temp;
+						}
+					}
+				}
+				r=r*10;
+			}
+		}
+		
+		void display()
+		{
+			int i;
+			cout<<"Sorted array elements: ";
+			for (i=0;i<5;i++)
+			cout<<" "<<arr[i];
+		}
+};
+
+int main()
+{
+	sort s;
+	s.getdata();
+	
+	char ch='y';
+	int option, x;
+	while(ch!='n')
+	{
+		cout<<"\n\n1.Selection Sort";
+		cout<<"\n2.Bubble Sort";
+		cout<<"\n3.Insertion Sort";
+		cout<<"\n4.Shell Sort";
+		cout<<"\n5.Radix Sort";
+		cout<<"\n6.Exit";
+		cout<<"\nEnter an option: ";
+		cin>>option;
+		switch(option)
+		{
+			case 1:
+			{
+				s.selectionsort();
+				s.display();
+				break;			
+			}	
+			
+			case 2:
+			{
+				s.bubblesort();
+				s.display();
+				break;
+			}
+			
+			case 3:
+			{
+				s.insertionsort();
+				s.display();
+				break;
+			}
+			
+			case 4:
+			{
+				s.shellsort();
+				s.display();
+				break;
+			}
+			
+			case 5:
+			{
+				s.radixsort();
+				s.display();
+				break;
+			}
+			
+			case 6:
+			{
+				ch='n';
+				break;
+			}
+			
+			default:
+			{
+		 		cout<<"Please choose option between 1-6!!";
+				break;
+			}
+		}
+	}
+}
+
+
+

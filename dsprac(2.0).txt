@@ -1,0 +1,1646 @@
+//binary search:-
+#include <iostream>
+ #include <string>
+  using namespace std;
+int* bubbleSort(int arr[], int size)
+{
+ int n = size;
+  for (int i = 0; i < n-1; i++)
+  { 
+    for (int j = 0; j < n-i-1; j++)
+	 {
+	   if (arr[j] > arr[j+1])
+        {
+          int temp = arr[j];
+		    arr[j] = arr[j+1];
+		    arr[j+1] = temp;
+        }
+     }
+  }
+return arr;
+}
+int binarySearch(int array[], int x, int low, int high)
+ {
+    if (high >= low)
+	  {
+        int mid = low + (high - low) / 2; 
+		if (array[mid] == x)
+        return mid;
+    if (array[mid] > x)
+    return binarySearch(array, x, low, mid - 1);
+	 return binarySearch(array, x, mid + 1, high);
+      }
+ 
+return -1;
+ } 
+void printArray(int arr[], int size)
+{
+int n = size;
+  for (int i=0; i<n; ++i)
+   {
+      cout<<arr[i]<<" ";
+   }
+}
+
+int main()
+{
+ int n, i, s,f; 
+ int *a;
+ cout<<"Binary Search Implementation"<<endl;
+ cout<<"Enter number of elements: "<<endl; 
+ cin>>n;
+ int arr[n];
+ for ( i = 0; i < n; i++)
+  {
+    cout<<"Enter "<<i+1<<" element"<<endl;
+	cin>>arr[i];
+  }
+    cout<<"Enter the element which needs to be searched: "<<endl;
+	cin>>s;
+    a = bubbleSort(arr, n); 
+	cout<<"Sorted array is: ";
+	 printArray(a, n);
+	  cout<<"\n";
+   f=binarySearch(a, s, 0, n-1); 
+   if(f == -1)
+   {
+     cout<<"Element not found in the array";
+   }
+   else{
+   cout<<"Element found at "<<f+1<<" position in the array";
+}
+return 0;
+}
+
+
+
+//linear search:-
+#include <iostream>
+ #include <string> 
+ using namespace std;
+int linearSearch(int arr[], int n, int s)
+{
+ for(int i = 0; i < n; i++)
+ {
+ 	if(arr[i] == s)
+	 {
+	  return i;
+	 }
+}
+return -1;
+}
+int main()
+{
+ int n, i, s,f;
+ cout<<"Linear Search Implementation"<<endl;
+cout<<"Enter number of elements : "<<endl;
+ cin>>n;
+int arr[n];
+ for ( i = 0; i < n; i++)
+  {
+    cout<<"Enter "<<i+1<<" element"<<endl;
+    cin>>arr[i];
+  }
+ cout<<"Enter the element which needs to be searched: "<<endl;
+ cin>>s;
+f = linearSearch(arr,n,s);
+   if(f == -1)
+   {
+     cout<<"Element not found in the array";
+   }
+   else
+   {
+    cout<<"Element found at "<<f+1<<" position in the array";
+   } 
+return 0;
+}
+
+searching:-
+#include<iostream>
+using namespace std;
+
+class search
+{
+	int arr[10];
+	public:
+	
+	void getdata()
+	{
+		cout<<"Implementation of Searching Algorithms"<<endl;
+		cout<<"Enter 10 elements";
+		for(int i=0;i<10;i++)
+		cin>>arr[i];
+	}
+	
+	void linearSearch()
+	{
+		int x, i;
+		cout<<"Enter an element to search in the array";
+		cin>>x;
+		for(i=0;i<10;i++)
+		{
+			if(arr[i]==x)
+			{
+				cout<<"Element found at index:"<<i;
+				break;		
+			}
+		}	
+		if(i==10)
+		{
+		cout<<"Element not found in array";
+		}
+	}
+	
+	void sort()
+	{
+		int i,j;
+		for(i=0;i<10;i++)
+		{
+			for(j=i+1;j<10;j++)
+			{
+				if(arr[i]>arr[j])
+				{
+					int temp=arr[i];
+					arr[i]=arr[j];
+					arr[j]=temp;
+				}
+			}
+		}
+	}
+	
+	void binarySearch(int x, int first, int last)
+	{
+		sort();
+		int mid=(first+last)/2;
+		if(first>last)
+		{
+			cout<<"Element not found";
+		}
+		else if(x==arr[mid])
+		{
+			cout<<"Element found at index: "<<mid;
+		}
+		else if(x<arr[mid])
+		{
+			binarySearch(x,0,mid-1);
+		}
+		else if(x>arr[mid])
+		{
+			binarySearch(x,mid+1,last);
+		}
+	}
+		
+};
+
+int main()
+{
+	search s;
+	s.getdata();
+	
+	char ch='y';
+	int option, x;
+	while(ch!='n')
+	{
+		cout<<"\n1.Linear Search";
+		cout<<"\n2.Binary Search";
+		cout<<"\n3.Exit";
+		cout<<"\nEnter an option: ";
+		cin>>option;
+		switch(option)
+		{
+			case 1:
+			{
+				s.linearSearch();
+				break;			
+			}	
+			
+			case 2:
+			{
+				cout<<"Enter an element to search in the array: ";
+				cin>>x;
+				s.binarySearch(x,0,9);
+				break;
+			}
+			
+			case 3:
+			{
+				ch='n';
+				break;
+			}
+			
+			default:
+			{
+		 		cout<<"Please choose valid option!!";
+				break;
+			}
+		}
+	}
+}
+
+
+//stack array1:-
+#include<iostream>
+using namespace std;
+class stack
+{
+	int stk[10], top;
+	public:
+		
+		stack()
+		{
+		 	top=-1;
+		}
+		 
+		void pop()
+		{
+		 	cout<<"The pop element is: "<<stk[top]<<"\n \n \n";
+		 	top--;
+		}
+		 
+		void push()
+		{
+		 	top++;
+		 	cout<<"Enter the value: ";
+		 	cin>>stk[top];
+		 	
+		}
+		 
+		void stack_overflow()
+		{
+		 	if(top==9)
+		 	{
+		 		cout<<"The stack is full \nPush can not be performed \n \n";
+			}
+		 	else
+		 		push();
+		}
+		 
+		void stack_underflow()
+		{
+		 	if(top==-1)
+		 	{
+		 		cout<<"The stack is empty \nPop can not be performed \n \n";
+			}
+		 	else
+		 		pop();
+		}
+		 
+		void display()
+		{
+		 	cout<<"\n \t \tStack value : \n";
+			for(int i=top;i>-1;i--)
+				cout<<"\t \t "<<stk[i]<<"\n";	
+		}
+};
+
+int main()
+{
+	stack s;
+	int ch;
+	do{
+		cout<<"Stack using array implementation "<<endl;
+		cout<<"\n1:Push \n2:Pop \n3:Display \n4:Exit \n\nEnter the operation you want to perform: ";
+		cin>>ch;
+		switch(ch)
+		{
+			case 1: s.stack_overflow();
+					break;
+			case 2: s.stack_underflow();
+					break;
+			case 3: s.display();
+					break;
+		}
+	}while(ch!=4);
+
+	return(0);
+}
+
+
+//stack array2:-
+#include <iostream>
+using namespace std;
+int arr[100],
+	top=-1,
+	 maxi=100;
+	void push(int val)
+	{
+		if(top>=maxi)
+		{
+		   cout<<"The given Stack is full"<<endl;
+		}
+		else
+		{
+			top++;
+			arr[top]=val;
+		}
+	}
+	void pop()
+	{
+		if(top<=-1)
+		{
+		   cout<<"Number element to remove array is empty"<<endl;
+		}
+		else
+		{
+		   cout<<"Element Popped "<< arr[top]<<endl;
+		   top--;
+		}
+	}
+	
+	void display()
+	{
+		cout<<"\n \t \tStack value : \n";
+		for(int i=top; i>=0; i--)
+		{
+		 cout<<"\t \t"<<arr[i]<<"\n ";
+	    }
+	    cout<<endl;
+	}
+	
+	int main() 
+	{
+	   int ch, val;
+	   cout<<"Stack using array "<<endl;
+	   cout<<"Let us know which task do you wish to perform"<<endl;
+	   cout<<"1) Push"<<endl;
+	   cout<<"2) Pop"<<endl;
+	   cout<<"3) Display elements present in the Stack"<<endl;
+	   cout<<"4) Exit"<<endl;
+	   do 
+	   {
+	   	cout<<"Enter your choice: "<<endl;
+	              cin>>ch;
+	             switch(ch)
+		 {
+	       case 1: 
+		   {
+	                    cout<<"Enter the value to be pushed:"<<endl;
+	                    cin>>val;
+	                   push(val);
+	                    break;
+	                  }
+	       case 2: 
+        {
+	            pop();
+	            break;
+	        }
+	         
+	        case 3: 
+	       {
+	            display();
+	            break;
+	         }
+	         case 4: 
+	      {
+	        cout<<"Thank you"<<endl;
+	         cout<<"Program Exited"<<endl;
+	         break;
+	       }
+	         default: 
+      {
+	          cout<<"Invalid Choice"<<endl;
+	       }
+	      }
+	   }
+while(ch!=4);
+	   return 0;
+	}
+
+stack linkedlist1:-
+#include<iostream>
+using namespace std;
+
+class node                     //child class
+{
+	public:
+		int data;
+		node *link;            //self referential pointer (same as class name)
+}; 
+
+class stack                    //parent class
+{
+	node *top;
+	int count;
+	public:
+		
+		stack()
+		{
+			top=NULL;
+			count=0;
+		}
+		
+		void push(int);
+		void pop();
+		void display();
+		void stacktop();
+};
+
+void stack::push (int data1)
+{
+	node *newnode = new node();
+	newnode-> data=data1;
+	newnode -> link=top;
+	top=newnode;
+	count=count+1;
+}
+
+void stack::display()
+{
+	node *temp;
+	temp=top;
+	int i=0;
+	if(temp!=NULL)
+	{
+		while(temp!=NULL)
+		{
+			cout<<"\nElement "<<++i<<" is: "<<temp->data;
+			temp=temp->link;
+		}
+	}
+	else
+	{
+		cout<<"\nStack is empty...";
+	}
+}
+
+void stack::stacktop()
+{
+	if(top!=NULL)
+	{
+		cout<<"\nData of top position is: "<<top->data;
+		cout<<"\nTotal elements in stack are: "<<count;	
+	}	
+	else
+	{
+		cout<<"\nStack is empty...";
+	}
+}
+
+void stack::pop()
+{
+	node *temp;
+	temp=top;
+	if(temp!=NULL)
+	{
+		top=temp->link;
+		count=count-1;
+		cout<<"\nThe data "<<temp->data<<" is deleted from the stack";
+		delete temp;
+	}
+	else
+	{
+		cout<<"\nYou cannot perform pop operations as stack is empty.";
+	}
+}
+
+int main()
+{
+	stack s;
+	int ch, val;
+	cout<<"Stack using Linked List implementation "<<endl;
+	cout<<"\n1.Push";
+	cout<<"\n2.Pop";
+	cout<<"\n3.Display";
+	cout<<"\n4.Exit";
+	do
+	{
+		cout<<"\nEnter a choice:";
+		cin>>ch;
+		switch(ch)
+		{
+			case 1:
+			{
+				cout<<"\nEnter the value to be pushed: ";
+				cin>>val;
+				s.push(val);			
+				break;
+			}	
+			
+			case 2:
+			{
+				s.pop();
+				break;
+			}
+			
+			case 3:
+			{
+				s.display();
+				break;
+			}
+			
+			case 4:
+			{
+				cout<<"\nExit";
+				break;
+			}
+			
+			default:
+			{
+		 		cout<<"\nPlease enter valid choice!!";
+			}
+		}
+	}
+	while(ch!=4);
+	return 0;
+}
+
+
+stack linked list2:-
+#include <bits/stdc++.h> 
+using namespace std;
+struct Node
+{
+int data;
+struct Node* link;
+};
+struct Node* top;
+void push(int data)
+{
+struct Node* temp; 
+temp = new Node();
+if (!temp)
+{
+cout << "\n Memory is full";
+exit(1);
+}
+else
+{
+temp->data = data; 
+temp->link = top; 
+top = temp;
+}
+}
+void pop()
+{
+struct Node* temp;
+if (top == NULL)
+{
+cout << "\n Cannot pop because stack is empty'" << endl;
+}
+else
+{
+temp = top;
+top = top->link;
+temp->link = NULL; 
+free(temp);
+cout << "\nElement has been popped" << endl;
+}
+}
+void display()
+{
+struct Node* temp;
+
+if (top == NULL)
+{
+cout << "\nStack is empty";
+
+exit(1);
+}
+else
+{
+temp = top;
+cout << "Elements are \n"<<endl; 
+while (temp != NULL)
+{
+cout << temp->data<<"\n"; 
+temp = temp->link;
+}
+}
+}
+int main()
+{
+int choice,val;
+cout<<"Stack using linked list implementation"<<endl;
+cout<<"\n 1.PUSH\n 2.POP\n 3.DISPLAY\n 4.EXIT"<<endl; 
+do
+{
+cout<<"Enter  Choice:"<<endl; 
+cin>>choice;
+switch(choice)
+{
+case 1:
+{
+cout<<"Enter value to be pushed:"<<endl; 
+cin>>val;
+push(val);
+break;
+}
+case 2:
+{
+pop(); 
+break;
+}
+case 3:
+{
+display();
+break;
+}
+case 4:
+{
+cout<<"Thank you so much"<<endl;	
+cout<<"Exit \n"<<endl; 
+break;
+}
+}
+}
+while(choice!=4); 
+return 0;
+}
+
+Balancing1:-
+#include<iostream>
+using namespace std;
+
+class stack{
+	int stk[10], top;
+	
+	public:
+		 
+		 stack()
+		 {
+		 	top=-1;
+		 }
+		 
+		 void pop()
+		 {
+		 	top--;
+		 }
+		 
+		 void push()
+		 {
+		 	top++;		 	
+		 }
+		 
+		 void print()
+		 {
+			if(top==-1){
+				cout<<"The expression is balanced";
+			}
+			else{
+			cout<<"The Bracket/s is/are missing";
+			}
+		 }
+};
+
+
+int main()
+{
+	stack s;
+	char ex[20];
+	cout<<"Balancing of Parenthesis"<<endl;
+	cout<<"Enter the expression: ";
+	cin>>ex;
+	for(int i=0;ex[i]!='\0';i++)
+	{
+		if(ex[i]=='(')
+		{
+			s.push();
+		}
+		else if(ex[i]==')')
+			s.pop();	
+	}
+	s.print();
+}
+
+balancing2:-
+#include <bits/stdc++.h>
+	using namespace std;
+	bool areBracketsBalanced(string expr)
+	{
+		stack<char> temp;
+		for (int i = 0; i < expr.length(); i++) {
+			if (temp.empty()) {
+				temp.push(expr[i]);
+			}
+			else if ((temp.top() == '(' && expr[i] == ')')
+					|| (temp.top() == '{' && expr[i] == '}')
+					|| (temp.top() == '[' && expr[i] == ']')) {
+				temp.pop();
+			}
+			else {
+				temp.push(expr[i]);
+			}
+		}
+		if (temp.empty()) {
+			return true;
+		}
+		return false;
+	}
+	
+	int main()
+	{
+		cout<<"Balancing Paranthesis Performed"<<endl;
+		string expr = "[]{}()";              // "[]{}()" - Balanced, "[(])"- Not Balanced
+	 
+		if (areBracketsBalanced(expr))
+			cout <<"\n THIS IS BALANCED";
+		else
+			cout << "THIS IS NOT BALANCED";
+		return 0;
+	}
+
+postfix1:-
+#include<iostream>
+using namespace std;
+
+class node
+{
+	public:
+		int data;
+		node *link;
+};
+
+class stack
+{
+	node *top;
+	int count;
+	public:
+		
+		stack()
+		{
+			top=NULL;
+			count=0;	
+		}	
+		
+		void push(int);
+		void display();
+		void pop_add();
+		void pop_sub();
+		void pop_multi();
+		void pop_div();		
+};
+
+void stack::push(int data1)
+{
+	node *newnode = new node();
+	newnode -> data=data1;
+	newnode -> link=top;
+	top=newnode;
+	count=count+1;
+}
+
+void stack::display()
+{
+	node *temp;
+	temp=top;
+	int i=0;
+	if(temp!=NULL)
+	{
+		while (temp!=NULL)
+		{
+			cout<<"\nResult is: "<<temp->data;
+			temp=temp->link;
+		}
+	}
+	else
+	{
+		cout<<"\nStack is empty!!";
+	}
+}
+
+void stack::pop_add()
+{
+	int val;
+	node *temp;
+	temp = top;
+	top = temp->link;
+	val = temp->data;
+	delete temp;
+	top -> data+= val; 
+}
+
+void stack::pop_sub()
+{
+	int val;
+	node *temp;
+	temp = top;
+	top = temp->link;
+	val = temp->data;
+	delete temp;
+	top -> data-=val;
+}
+
+void stack::pop_multi()
+{
+	int val;
+	node *temp;
+	temp = top;
+	top = temp->link;
+	val = temp->data;
+	delete temp;
+	top -> data*=val;
+}
+
+void stack::pop_div()
+{
+	int val;
+	node *temp;
+	temp = top;
+	top = temp->link;
+	val = temp->data;
+	delete temp;
+	top -> data/=val;
+}
+
+int main()
+{
+	stack s;
+	char exp[20];
+	int i, data;
+	cout<<"Stack Application Post-Fix Evalutation"<<endl;
+	cout<<"\nEnter the expression: "; //Enter 569*7/3, 2 3 1 * + 9 -
+	cin>>exp;
+	for(i=0;exp[i]!='\0';i++)
+	{
+		if(exp[i]=='+' || exp[i]=='-' || exp[i]=='*' || exp[i]=='/')
+		{
+			if (exp[i]=='+')
+			{
+				s.pop_add();
+			}
+			else if(exp[i]=='-')
+			{
+				s.pop_sub();
+			}
+			else if(exp[i]=='*')
+			{
+				s.pop_multi();
+			}
+			else
+			{
+				s.pop_div();
+			}
+		}
+		else
+		{
+			data = int(exp[i])-48;               // 0 - Character datatype has integer value - 48
+			s.push(data);
+		}
+	}
+	s.display();
+	return (0);
+}
+
+postfix2:-
+#include <iostream>
+#include <bits/stdc++.h> 
+
+using namespace std;
+struct Stack
+{
+    int top;
+    unsigned capacity;
+    int* array;
+};
+struct Stack* createStack( unsigned capacity )
+{
+    struct Stack* stack = (struct Stack*) malloc(sizeof(struct Stack));
+ 
+    if (!stack) return NULL;
+ 
+    stack->top = -1;
+    stack->capacity = capacity;
+    stack->array = (int*) malloc(stack->capacity * sizeof(int));
+ 
+    if (!stack->array) return NULL;
+ 
+    return stack;
+}
+ 
+int isEmpty(struct Stack* stack)
+{
+    return stack->top == -1 ;
+}
+ 
+char peek(struct Stack* stack)
+{
+    return stack->array[stack->top];
+}
+ 
+char pop(struct Stack* stack)
+{
+    if (!isEmpty(stack))
+        return stack->array[stack->top--] ;
+    return '$';
+}
+ 
+void push(struct Stack* stack, char op)
+{
+    stack->array[++stack->top] = op;
+}
+ 
+int evaluatePostfix(char* exp)
+{
+
+    struct Stack* stack = createStack(strlen(exp));
+    int i;
+ 
+    if (!stack){
+	 return -1;
+}
+ 
+    for (i = 0; exp[i]; ++i)
+    {
+        if (isdigit(exp[i]))
+            push(stack, exp[i] - '0');
+ 
+         else
+        {
+            int val1 = pop(stack);
+            int val2 = pop(stack);
+            switch (exp[i])
+            {
+            case '+': push(stack, val2 + val1); 
+			break;
+            case '-': push(stack, val2 - val1);
+			break;
+            case '*': push(stack, val2 * val1);
+			break;
+            case '/': push(stack, val2/val1);
+			break;
+            }
+        }
+    }
+    return pop(stack);
+}
+ 
+int main()
+{
+    cout<<"Stack Application Post-Fix Evalutation"<<endl;
+	char exp[] = "569*7/3";
+    cout<<"Result:- "<< evaluatePostfix(exp);
+    return 0;
+}
+
+circularqueue2:-
+#include <iostream>
+
+using namespace std;
+struct Node {
+   int data;
+   struct Node * next;
+};
+Node * front = NULL;
+Node * rear = NULL;
+void enqueue(int val) {
+   if (front == NULL || rear == NULL) {
+      Node * newNode;
+      newNode = new Node;
+      newNode -> data = val;
+      newNode -> next = NULL;
+      front = newNode;
+      rear = newNode;
+   } else {
+      Node * newNode;
+      newNode = new Node;
+      newNode -> data = val;
+      rear -> next = newNode;
+      newNode -> next = front;
+      rear = newNode;
+   }
+}
+void dequeue() {
+   Node * n;
+   n = front;
+   if (front == NULL) {
+      cout << "Underflow \n" << endl;
+      return;
+   } else {
+      front = front -> next;
+      delete(n);
+   }
+}
+void display() {
+   Node * ptr;
+   ptr = front;
+   if (ptr == NULL) {
+      cout << "Queue is Empty \n" << endl;
+      return;
+   } else {
+      do {
+         cout << "\n";
+         cout << ptr -> data << " ";
+         ptr = ptr -> next;
+         cout << "\n";
+      }
+      while (ptr != rear -> next);
+   }
+}
+int main() {
+   int choice;
+   int val;
+   cout << "Implementation of Circular Queue Using Linked List" << endl;
+   cout << "\n 1.ENQUEUE\n 2.DEQUEUE\n 3.DISPLAY\n 4.EXIT" << endl;
+   do {
+      cout << "Enter the Choice: \n" << endl;
+      cin >> choice;
+      switch (choice) {
+      case 1: {
+         cout << "Enter value to be ENQUEUE: \n" << endl;
+         cin >> val;
+         enqueue(val);
+         break;
+      }
+      case 2: {
+         dequeue();
+         break;
+      }
+      case 3: {
+         display();
+         break;
+      }
+      case 4: {
+         cout << "Exit \n" << endl;
+         break;
+      }
+      default: {
+         cout << "Invalid Input!, Please Enter a Valid Choice(1/2/3/4) \n" << endl;
+      }
+      }
+   }
+   while (choice != 4);
+   return 0;
+}
+
+Doubley ended queue1:-
+#include<iostream>
+using namespace std;
+
+class node          //Child class
+{
+	public:
+		int data;
+		node *next;
+};
+
+class queue         //Parent class
+{
+	node *front;
+	node *rear;
+	public:
+		queue()
+		{
+			front = rear = NULL;
+		}
+		
+		void addition_atrear(int num)
+		{
+			node *new_node = new node();
+			new_node -> data = num;
+			new_node -> next = NULL;
+			if(rear==NULL)
+			{
+				front = rear = new_node;
+			}
+			else
+			{
+				rear -> next = new_node;
+				rear = new_node;
+			}
+		}
+		
+		int deletion_fromfront()
+		{
+			node *temp;
+			temp = front;
+			if(front==NULL)
+			{
+				cout<<"Queue is empty";
+				return 0;
+			}
+			
+			int val = temp -> data;
+			if(front == rear)
+			{
+				front = rear = NULL;
+				delete temp;
+			}
+			else
+			{
+				front = temp -> next;
+				delete temp;
+			}
+			return val;
+		}
+		
+		void display()
+		{
+			node *temp;
+			temp = front;
+			while(temp!=NULL)
+			{
+				cout<< temp -> data <<endl;
+				temp = temp -> next;
+			}
+		}
+		
+		void addition_atfront(int num)
+		{
+			node *new_node = new node();
+			new_node -> data = num;
+			new_node -> next = front;
+			front = new_node;
+		}
+		
+		int deletion_fromrear()
+		{
+			int n;
+			node *ptr,*temp;
+			temp=front;
+			if(front==NULL)
+			{
+				cout<<"Queue is empty";
+				return 0;
+			}
+			if(front==rear)
+			{
+				n=front->data;
+				delete front;
+				front=rear=NULL;				
+			}
+			else 
+    		{
+		        while (temp->next!=rear)
+				{
+					temp=temp->next;
+				}
+				ptr=rear;
+				n=ptr->data;
+				rear=temp;
+				temp->next=NULL;
+				delete(ptr);				        
+			}
+			return n;
+		}
+		
+};
+
+int main()
+{
+	queue q;
+	char ch='y';
+	int option, x;
+	while(ch!='n')
+	{
+		cout << "Implementation of Double Ended Queue Using Linked List" << endl;
+		cout<<"\n\n1.Addition of elements from rear";
+		cout<<"\n2.Deletion of elements from front";
+		cout<<"\n3.Adddition of elements at front";
+		cout<<"\n4.Deletion of elements from rear";
+		cout<<"\n5.Exit";
+		cout<<"\nEnter an option: ";
+		cin>>option;
+		switch(option)
+		{
+			case 1:
+			{
+				q.addition_atrear(100);
+				q.addition_atrear(200);
+				q.addition_atrear(300);
+				q.addition_atrear(400);
+				q.display();
+				break;
+			}
+			
+			case 2:
+			{
+				q.deletion_fromfront();
+				q.display();
+				break;
+			}
+			
+			case 3:
+			{
+				q.addition_atfront(11);
+				q.addition_atfront(12);
+				q.display();
+				break;
+			}
+			
+			case 4:
+			{
+				q.deletion_fromrear();
+				q.display();
+				break;
+			}
+			
+			case 5:
+			{
+				ch='n';
+				break;
+			}
+			
+			default:
+			{
+		 		cout<<"Please choose option between 1-5!!";
+				break;
+			}
+		}
+	}	
+}
+
+doubley ended queue2:-
+#include <iostream>
+
+using namespace std;
+class Node {
+   public: int data;
+   Node * next;
+   Node * prev;
+   Node(int d) {
+      data = d;
+      next = NULL;
+      prev = NULL;
+   }
+};
+Node * newNode(int x) {
+   Node * node = new Node(x);
+   return node;
+}
+Node * front = NULL;
+Node * rear = NULL;
+int Size = 0;
+void insertFront(int x) {
+   Node * node = newNode(x);
+   if (front == NULL) {
+      front = rear = node;
+   } else {
+      node -> next = front;
+      front -> prev = node;
+      front = node;
+   }
+   Size++;
+}
+void insertEnd(int x) {
+   Node * node = newNode(x);
+   if (rear == NULL) {
+      front = rear = node;
+   } else {
+      node -> prev = rear;
+      rear -> next = node;
+      rear = node;
+   }
+   Size++;
+}
+void deleteFront() {
+   if (front == NULL) {
+      cout << "\nQueue is empty\n" << endl;
+      return;
+   }
+   if (front == rear) {
+      front = rear = NULL;
+   } else {
+      Node * temp = front;
+      front = front -> next;
+      front -> prev = NULL;
+      delete(temp);
+   }
+   Size--;
+}
+void deleteEnd() {
+   if (rear == NULL) {
+      cout << "\nQueue is empty\n" << endl;
+      return;
+   }
+   if (front == rear) {
+      front = rear = NULL;
+   } else {
+      Node * temp = rear;
+      rear = rear -> prev;
+      rear -> next = NULL;
+      delete(temp);
+   }
+   Size--;
+}
+int getFront() {
+   if (front != NULL) {
+      return front -> data;
+   }
+   return -1;
+}
+int getEnd() {
+   if (rear != NULL) {
+      return rear -> data;
+   }
+   return -1;
+}
+int size() {
+   return Size;
+}
+bool isEmpty() {
+   if (front == NULL) {
+      return true;
+   }
+   return false;
+}
+void erase() {
+   rear = NULL;
+   while (front != NULL) {
+      Node * temp = front;
+      front -> prev = NULL;
+      front = front -> next;
+      delete(temp);
+   }
+   Size = 0;
+}
+void display() {
+   Node * temp = front;
+   if (front == NULL) {
+      cout << "\nQueue is empty\n" << endl;
+   } else {
+      cout << "\nQueue is: \n";
+      while (temp != NULL) {
+         cout << temp -> data << " ";
+         temp = temp -> next;
+      }
+      cout << endl;
+   }
+}
+int main() {
+   int choice;
+   int val;
+   int n;
+  cout << "Implementation of Double Ended Queue Using Linked List" << endl;
+   cout <<"\n\n1.InsertFront\n2.InsertEnd\n3.DeleteFront\n4.DeleteEnd\n5.GetFront\n6.GetEnd\n7.IsEmpty \n8.SizeOfQueue \n9.Erase \n10.Display \n11.Exit ";
+   do {
+      cout << "\nEnter the Choice:" << endl;
+      cin >> choice;
+      switch (choice) {
+      case 1:
+         cout << "\nEnter the element to be inserted at Front: ";
+         cin >> n;
+         insertFront(n);
+         break;
+      case 2:
+         cout << "\nEnter the element to be inserted at End : ";
+         cin >> n;
+         insertEnd(n);
+         break;
+      case 3:
+         cout << "\nDelete at Front ";
+         deleteFront();
+         break;
+      case 4:
+         cout << "\nDelete at End ";
+         deleteEnd();
+         break;
+      case 5:
+         n = getFront();
+         if (n == -1) {
+            cout << "\nQueue is empty\n" << endl;
+         } else {
+            cout << "\nFront element is : " << getFront() <<"\n";
+         }
+         break;
+      case 6:
+         n = getFront();
+         if (n == -1) {
+            cout << "\nQueue is empty\n" << endl;
+         } else {
+            cout << "\nEnd element is : " << getEnd() <<"\n";
+         }
+         break;
+      case 7:
+         if (isEmpty()) {
+            cout << "\nQueue is empty\n";
+         } else {
+            cout << "\nQueue is not empty\n";
+         }
+         break;
+      case 8:
+         cout << "\nSize of Queue is: " << size() <<"\n";
+         break;
+      case 9:
+         erase();
+         break;
+      case 10:
+         display();
+         break;
+      case 11:
+         exit(0);
+         break;
+      default:
+         cout << "\nSelect Proper Option" << endl;
+      }
+   }
+   while (choice != 11);
+   return 0;
+}
+
+simpleQueue1:-
+#include<iostream>
+using namespace std;
+
+class node          //Child class
+{
+	public:
+		int data;
+		node *next;
+};
+
+class queue         //Parent class
+{
+	node *front;
+	node *rear;
+	public:
+		queue()
+		{
+			front = rear = NULL;
+		}
+		
+		void enqueue(int num)
+		{
+			node *new_node = new node();
+			new_node -> data = num;
+			new_node -> next = NULL;
+			if(rear==NULL)
+			{
+				front = rear = new_node;
+			}
+			else
+			{
+				rear -> next = new_node;
+				rear = new_node;
+			}
+		}
+		
+		int dequeue()
+		{
+			node *temp;
+			temp = front;
+			if(front==NULL)
+			{
+				cout<<"Queue is empty";
+				return 0;
+			}
+			
+			int val = temp -> data;
+			if(front == rear)
+			{
+				front = rear = NULL;
+				delete temp;
+			}
+			else
+			{
+				front = temp -> next;
+				delete temp;
+			}
+			return val;
+		}
+		
+		void display()
+		{
+			node *temp;
+			temp = front;
+			while(temp!=NULL)
+			{
+				cout<< temp -> data;
+				temp = temp -> next;
+				cout<<"\n";
+			}
+		}
+};
+
+int main()
+{
+	queue q;
+	char ch='y';
+	int option, x;
+	while(ch!='n')
+	{
+		cout << "Implementation of Simple Queue Using Linked List" << endl;
+		cout<<"\n\n1.enqueue";
+		cout<<"\n2.dequeue";
+		cout<<"\n3.Exit";
+		cout<<"\nEnter an option: ";
+		cin>>option;
+		switch(option)
+		{
+			case 1:
+			{
+				q.enqueue(10);
+				q.enqueue(20);
+				q.enqueue(30);
+				q.enqueue(40);
+				q.display();
+				break;
+			}
+			
+			case 2:
+			{
+				q.dequeue();
+				q.display();
+				break;
+			}
+			
+			case 3:
+			{
+				ch='n';
+				break;
+			}
+			
+			default:
+			{
+		 		cout<<"Please choose option between 1-3!!";
+				break;
+			}
+		}
+	}	
+}
+
+simplequeue2:-
+#include <bits/stdc++.h>
+
+using namespace std;
+struct node {
+   int data;
+   struct node * next;
+};
+struct node * front = NULL;
+struct node * rear = NULL;
+struct node * temp;
+void Insert(int val) {
+   cout << "Inserting \n" << endl;
+   if (rear == NULL) {
+      rear = new node;
+      rear -> next = NULL;
+      rear -> data = val;
+      front = rear;
+   } else {
+      temp = new node;
+      rear -> next = temp;
+      temp -> data = val;
+      temp -> next = NULL;
+      rear = temp;
+   }
+}
+void Delete() {
+   temp = front;
+   if (front == NULL) {
+      cout << "Underflow \n" << endl;
+      return;
+   } else {
+      if (temp -> next != NULL) {
+         temp = temp -> next;
+         cout << front -> data << endl;
+         free(front);
+         front = temp;
+      } else {
+         cout << "Element deleted from queue is: " << front -> data << "\n" << endl;
+         free(front);
+         front = NULL;
+         rear = NULL;
+      }
+   }
+}
+void Display() {
+   temp = front;
+   if ((front == NULL) && (rear == NULL)) {
+      cout << "Queue is Empty \n" << endl;
+      return;
+   }
+   cout << "Queue Elements are \n";
+   while (temp != NULL) {
+      cout << temp -> data << " ";
+      temp = temp -> next;
+      cout << "\n";
+   }
+}
+int main() {
+   int choice;
+   int val;
+   cout << "Implementation of Simple Queue Using Linked List" << endl;
+   cout << "\n 1.ENQUEUE\n 2.DEQUEUE\n 3.DISPLAY\n 4.EXIT" << endl;
+   do {
+      cout << "Enter the Choice: \n" << endl;
+      cin >> choice;
+      switch (choice) {
+      case 1: {
+         cout << "Enter value to be ENQUEUE: \n" << endl;
+         cin >> val;
+         Insert(val);
+         break;
+      }
+      case 2: {
+         Delete();
+         break;
+      }
+      case 3: {
+         Display();
+         break;
+      }
+      case 4: {
+         cout << "Exit \n" << endl;
+         break;
+      }
+      default: {
+         cout << "Invalid Input!, Please Enter a Valid Choice(1/2/3/4) \n" << endl;
+      }
+      }
+   }
+   while (choice != 4);
+   return 0;
+}
+
+
+
